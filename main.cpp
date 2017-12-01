@@ -11,6 +11,7 @@ static const int GPIO_LAT = 13; // WHITE
 static const int GPIO_CLK = 20; // YELLOW
 
 extern int clock_count = 0;
+extern int latch_count = 0;
 extern uint32_t dat_button = 1 << GPIO_DAT;
 
 void controll();
@@ -25,6 +26,7 @@ void clocking(int gpio, int level, uint32_t tick) {
 void latching(int gpio, int level, uint32_t tick) {
   if (level == 1) {
     clock_count = 0;
+    latch_count++;
   }
   controll();
 }
@@ -55,6 +57,8 @@ int main() {
 
 
   while (1) {
+    time_sleep(1);
+    printf("%d\n", latch_count);
   }
 
   gpioTerminate();
