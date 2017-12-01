@@ -11,7 +11,9 @@ static const int GPIO_P_S = 13; // WHITE
 static const int GPIO_CLK = 20; // YELLOW
 
 void aFunction(int gpio, int level, uint32_t tick) {
-  printf("GPIO %d became %d at %d", gpio, level, tick);
+  if (level == 1) {
+    printf("GPIO %d rised at %d", gpio, level, tick);
+  }
 }
 
 int main() {
@@ -21,15 +23,17 @@ int main() {
   gpioSetMode(GPIO_CLK, PI_INPUT);
   gpioSetMode(GPIO_P_S, PI_INPUT);
 
-  cout << "POWER " << gpioRead(GPIO_VCC) << endl;
-  cout << "DAT   " << gpioRead(GPIO_DAT) << endl;
-  cout << "CLK   " << gpioRead(GPIO_CLK) << endl;
-  cout << "P/S   " << gpioRead(GPIO_P_S) << endl;
+  gpioSetPullUpDown(GPIO_CLK, PI_PUD_UP);
+  gpioSetPullUpDown(GPIO_P_S, PI_PUD_UP);
 
   gpioSetAlertFunc(4, aFunction);
 
   while (1) {
-    /* code */
+    cout << "=================" << endl;
+    cout << "POWER " << gpioRead(GPIO_VCC) << endl;
+    cout << "DAT   " << gpioRead(GPIO_DAT) << endl;
+    cout << "CLK   " << gpioRead(GPIO_CLK) << endl;
+    cout << "P/S   " << gpioRead(GPIO_P_S) << endl;
   }
 
   gpioTerminate();
