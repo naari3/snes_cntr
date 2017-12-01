@@ -10,7 +10,7 @@ static const int GPIO_DAT = 19; // RED
 static const int GPIO_LAT = 13; // WHITE
 static const int GPIO_CLK = 20; // YELLOW
 
-int clock = 0;
+extern clock_count = 0;
 
 void clocking(int gpio, int level, uint32_t tick) {
   if (level == 1) {
