@@ -29,11 +29,6 @@ int main() {
   gpioSetAlertFunc(4, aFunction);
 
   while (1) {
-    cout << "=================" << endl;
-    cout << "POWER " << gpioRead(GPIO_VCC) << endl;
-    cout << "DAT   " << gpioRead(GPIO_DAT) << endl;
-    cout << "CLK   " << gpioRead(GPIO_CLK) << endl;
-    cout << "P/S   " << gpioRead(GPIO_P_S) << endl;
   }
 
   gpioTerminate();
