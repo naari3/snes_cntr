@@ -11,6 +11,7 @@ static const int GPIO_LAT = 13; // WHITE
 static const int GPIO_CLK = 20; // YELLOW
 
 extern int clock_count = 0;
+extern uint32_t dat_button = 1 << GPIO_DAT;
 
 void clocking(int gpio, int level, uint32_t tick) {
   if (level == 1) {
@@ -26,9 +27,11 @@ void latching(int gpio, int level, uint32_t tick) {
 
 void controll() {
   if (clock_count > 15) {
-    gpioWrite(GPIO_DAT, 0);
+    // gpioWrite(GPIO_DAT, 0);
+    gpioWrite_Bits_0_31_Set(0);
   } else {
-    gpioWrite(GPIO_DAT, 1);
+    // gpioWrite(GPIO_DAT, 1);
+    gpioWrite_Bits_0_31_Set(dat_button);
   }
 }
 
@@ -44,6 +47,7 @@ int main() {
 
   gpioSetAlertFunc(GPIO_CLK, clocking);
   gpioSetAlertFunc(GPIO_LAT, latching);
+
 
   while (1) {
     controll();
