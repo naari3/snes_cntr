@@ -4,10 +4,10 @@
 using namespace std;
 
 
-static const int GPIO_VCC = 18; // GREEN
-static const int GPIO_DAT = 22; // RED
-static const int GPIO_CLK = 17; // YELLOW
-static const int GPIO_P_S = 27; // WHITE
+static const int GPIO_VCC = 26; // GREEN
+static const int GPIO_DAT = 19; // RED
+static const int GPIO_P_S = 13; // WHITE
+static const int GPIO_CLK = 6; // YELLOW
 
 void init() {
 }
