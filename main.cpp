@@ -10,12 +10,13 @@ static const int GPIO_CLK = 17; // YELLOW
 static const int GPIO_P_S = 27; // WHITE
 
 void init() {
-  gpioSetMode(GPIO_VCC, PI_INPUT);
 }
 
 int main() {
   if (gpioInitialise() < 0) return 1;
-  init();
+  gpioSetMode(GPIO_VCC, PI_INPUT);
+  gpioSetMode(GPIO_DAT, PI_INPUT);
+  gpioSetMode(GPIO_P_S, PI_INPUT);
 
   cout << "POWER " << gpioRead(GPIO_VCC) << endl;
   cout << "DAT   " << gpioRead(GPIO_DAT) << endl;
