@@ -26,7 +26,7 @@ int main() {
   gpioSetPullUpDown(GPIO_CLK, PI_PUD_UP);
   gpioSetPullUpDown(GPIO_P_S, PI_PUD_UP);
 
-  gpioSetAlertFunc(4, aFunction);
+  gpioSetAlertFunc(GPIO_CLK, aFunction);
 
   while (1) {
   }
