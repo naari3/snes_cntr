@@ -15,21 +15,27 @@ extern int clock_count = 0;
 void clocking(int gpio, int level, uint32_t tick) {
   if (level == 1) {
     clock_count++;
-    printf("clocked at %d\n", clock_count);
   }
 }
 
 void latching(int gpio, int level, uint32_t tick) {
   if (level == 1) {
     clock_count = 0;
-    printf("latched at %d\n", clock_count);
+  }
+}
+
+void controll() {
+  if (clock_count > 15) {
+    gpioWrite(GPIO_DAT, 0);
+  } else {
+    gpioWrite(GPIO_DAT, 1);
   }
 }
 
 int main() {
   if (gpioInitialise() < 0) return 1;
   gpioSetMode(GPIO_VCC, PI_INPUT);
-  gpioSetMode(GPIO_DAT, PI_INPUT);
+  gpioSetMode(GPIO_DAT, PI_OUTPUT);
   gpioSetMode(GPIO_CLK, PI_INPUT);
   gpioSetMode(GPIO_LAT, PI_INPUT);
 
@@ -40,6 +46,7 @@ int main() {
   gpioSetAlertFunc(GPIO_LAT, latching);
 
   while (1) {
+    controll();
   }
 
   gpioTerminate();
