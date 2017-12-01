@@ -28,6 +28,10 @@ int main() {
 
   gpioSetAlertFunc(4, aFunction);
 
+  while (1) {
+    /* code */
+  }
+
   gpioTerminate();
   return 0;
 }
