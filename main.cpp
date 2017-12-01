@@ -40,6 +40,7 @@ void controll() {
 }
 
 int main() {
+  gpioCfgClock(1, 1, 1);
   if (gpioInitialise() < 0) return 1;
   gpioSetMode(GPIO_VCC, PI_INPUT);
   gpioSetMode(GPIO_DAT, PI_OUTPUT);
