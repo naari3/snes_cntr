@@ -15,14 +15,14 @@ extern int clock_count = 0;
 void clocking(int gpio, int level, uint32_t tick) {
   if (level == 1) {
     clock_count++;
-    printf("clocked at %d\n", tick);
+    printf("clocked at %d\n", clock_count);
   }
 }
 
 void latching(int gpio, int level, uint32_t tick) {
   if (level == 1) {
     clock_count = 0;
-    printf("latched at %d\n", tick);
+    printf("latched at %d\n", clock_count);
   }
 }
 
