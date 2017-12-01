@@ -14,6 +14,7 @@ void init() {
 }
 
 int main() {
+  if (gpioInitialise() < 0) return 1;
   init();
 
   cout << "POWER " << gpioRead(GPIO_VCC) << endl;
