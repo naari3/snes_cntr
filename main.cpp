@@ -12,7 +12,7 @@ static const int GPIO_CLK = 20; // YELLOW
 
 void aFunction(int gpio, int level, uint32_t tick) {
   if (level == 1) {
-    printf("GPIO %d rised at %d", gpio, level, tick);
+    printf("GPIO %d rised at %d\n", gpio, level, tick);
   }
 }
 
@@ -27,6 +27,7 @@ int main() {
   gpioSetPullUpDown(GPIO_P_S, PI_PUD_UP);
 
   gpioSetAlertFunc(GPIO_CLK, aFunction);
+  gpioSetAlertFunc(GPIO_P_S, aFunction);
 
   while (1) {
   }
