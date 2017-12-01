@@ -7,12 +7,20 @@ using namespace std;
 
 static const int GPIO_VCC = 26; // GREEN
 static const int GPIO_DAT = 19; // RED
-static const int GPIO_P_S = 13; // WHITE
+static const int GPIO_LAT = 13; // WHITE
 static const int GPIO_CLK = 20; // YELLOW
 
-void aFunction(int gpio, int level, uint32_t tick) {
+int clock = 0;
+
+void clocking(int gpio, int level, uint32_t tick) {
   if (level == 1) {
-    printf("GPIO %d rised at %d\n", gpio, level, tick);
+    printf("clocked at %d\n", gpio, level, tick);
+  }
+}
+
+void latching(int gpio, int level, uint32_t tick) {
+  if (level == 1) {
+    printf("latched at %d\n", gpio, level, tick);
   }
 }
 
@@ -21,13 +29,13 @@ int main() {
   gpioSetMode(GPIO_VCC, PI_INPUT);
   gpioSetMode(GPIO_DAT, PI_INPUT);
   gpioSetMode(GPIO_CLK, PI_INPUT);
-  gpioSetMode(GPIO_P_S, PI_INPUT);
+  gpioSetMode(GPIO_LAT, PI_INPUT);
 
   gpioSetPullUpDown(GPIO_CLK, PI_PUD_UP);
-  gpioSetPullUpDown(GPIO_P_S, PI_PUD_UP);
+  gpioSetPullUpDown(GPIO_LAT, PI_PUD_UP);
 
-  gpioSetAlertFunc(GPIO_CLK, aFunction);
-  gpioSetAlertFunc(GPIO_P_S, aFunction);
+  gpioSetAlertFunc(GPIO_CLK, clocking);
+  gpioSetAlertFunc(GPIO_LAT, latching);
 
   while (1) {
   }
