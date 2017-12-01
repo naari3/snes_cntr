@@ -28,9 +28,9 @@ void latching(int gpio, int level, uint32_t tick) {
 void controll() {
   if (clock_count > 15) {
     // gpioWrite(GPIO_DAT, 0);
-    gpioWrite_Bits_0_31_Clear(0);
+    // gpioWrite_Bits_0_31_Clear(0);
   } else {
-    // gpioWrite(GPIO_DAT, 1);
+    gpioWrite(GPIO_DAT, 1);
     gpioWrite_Bits_0_31_Set(dat_button);
   }
 }
