@@ -21,5 +21,7 @@ int main() {
   cout << "POWER " << gpioRead(GPIO_VCC) << endl;
   cout << "DAT   " << gpioRead(GPIO_DAT) << endl;
   cout << "P/S   " << gpioRead(GPIO_P_S) << endl;
+
+  gpioTerminate();
   return 0;
 }
