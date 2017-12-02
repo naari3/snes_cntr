@@ -19,16 +19,16 @@ void controll();
 void clocking(int gpio, int level, uint32_t tick) {
   if (level == 1) {
     clock_count++;
+    controll();
   }
-  controll();
 }
 
 void latching(int gpio, int level, uint32_t tick) {
   if (level == 1) {
     clock_count = 0;
     latch_count++;
+    controll();
   }
-  controll();
 }
 
 void controll() {
