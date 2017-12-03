@@ -13,7 +13,7 @@ static const int GPIO_CLK = 20; // YELLOW
 extern int clock_count = 0;
 extern int latch_count = 0;
 
-extern int current_input;
+extern int current_input = 0;
 extern int next_input = 1;
 
 void controll();
