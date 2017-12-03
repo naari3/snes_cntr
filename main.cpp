@@ -12,38 +12,15 @@ static const int GPIO_CLK = 20; // YELLOW
 
 extern int clock_count = 0;
 extern int latch_count = 0;
-extern uint32_t dat_button = 1 << GPIO_DAT;
+
+extern int current_input;
+extern int next_input = 1;
 
 void controll();
+void clocking(int gpio, int level, uint32_t tick);
+void latching(int gpio, int level, uint32_t tick);
 
-void clocking(int gpio, int level, uint32_t tick) {
-  if (level == 1) {
-    clock_count++;
-    controll();
-  }
-}
-
-void latching(int gpio, int level, uint32_t tick) {
-  if (level == 1) {
-    clock_count = 0;
-    latch_count++;
-    controll();
-  }
-}
-
-void controll() {
-  if (clock_count < 13) {
-    gpioWrite(GPIO_DAT, 0);
-    // gpioWrite_Bits_0_31_Clear(0);
-  } else {
-    gpioWrite(GPIO_DAT, 1);
-    // gpioWrite_Bits_0_31_Set(dat_button);
-  }
-}
-
-int main() {
-  gpioCfgClock(1, 1, 1);
-  if (gpioInitialise() < 0) return 1;
+void setup() {
   gpioSetMode(GPIO_VCC, PI_INPUT);
   gpioSetMode(GPIO_DAT, PI_OUTPUT);
   gpioSetMode(GPIO_CLK, PI_INPUT);
@@ -54,11 +31,43 @@ int main() {
 
   gpioSetAlertFunc(GPIO_CLK, clocking);
   gpioSetAlertFunc(GPIO_LAT, latching);
+}
 
+void loop() {
+  /* code */
+}
+
+void clocking(int gpio, int level, uint32_t tick) {
+  if (level == 1) {
+    clock_count++;
+    controll();
+    current_input >>= 1;
+  }
+}
+
+void latching(int gpio, int level, uint32_t tick) {
+  if (level == 1) {
+    current_input = next_input;
+    clock_count = 0;
+    controll();
+    current_input >>= 1;
+  }
+}
+
+void controll() {
+  if ((current_input & 1) || clock_count > 15) {
+    gpioWrite_Bits_0_31_Clear(1<<GPIO_DAT);
+  } else {
+    gpioWrite_Bits_0_31_Set(1<<GPIO_DAT);
+  }
+}
+
+int main() {
+  gpioCfgClock(1, 1, 1);
+  if (gpioInitialise() < 0) return 1;
 
   while (1) {
-    time_sleep(1);
-    printf("%d\n", latch_count);
+    loop();
   }
 
   gpioTerminate();
