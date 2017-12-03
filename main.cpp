@@ -16,22 +16,32 @@ extern int latch_count = 0;
 extern int current_input = 0;
 extern int next_input = 1;
 
+extern int dat_path = 1<<GPIO_DAT;
+
+
 void controll();
 
 void clocking(int gpio, int level, uint32_t tick) {
   if (level == 1) {
     clock_count++;
-    controll();
+    if ((current_input & 1) || clock_count > 15) {
+      gpioWrite_Bits_0_31_Clear(dat_path);
+    } else {
+      gpioWrite_Bits_0_31_Set(dat_path);
+    }
     current_input >>= 1;
   }
 }
 
 void latching(int gpio, int level, uint32_t tick) {
   if (level == 1) {
-    latch_count++;
     current_input = next_input;
     clock_count = 0;
-    controll();
+    if ((current_input & 1) || clock_count > 15) {
+      gpioWrite_Bits_0_31_Clear(dat_path);
+    } else {
+      gpioWrite_Bits_0_31_Set(dat_path);
+    }
     current_input >>= 1;
   }
 }
