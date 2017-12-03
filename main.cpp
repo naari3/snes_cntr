@@ -45,16 +45,7 @@ void controll() {
 }
 
 void setup() {
-  gpioSetMode(GPIO_VCC, PI_INPUT);
-  gpioSetMode(GPIO_DAT, PI_OUTPUT);
-  gpioSetMode(GPIO_CLK, PI_INPUT);
-  gpioSetMode(GPIO_LAT, PI_INPUT);
 
-  gpioSetPullUpDown(GPIO_CLK, PI_PUD_UP);
-  gpioSetPullUpDown(GPIO_LAT, PI_PUD_UP);
-
-  gpioSetAlertFunc(GPIO_CLK, clocking);
-  gpioSetAlertFunc(GPIO_LAT, latching);
 }
 
 void loop() {
@@ -65,6 +56,17 @@ void loop() {
 int main() {
   gpioCfgClock(1, 1, 1);
   if (gpioInitialise() < 0) return 1;
+
+  gpioSetMode(GPIO_VCC, PI_INPUT);
+  gpioSetMode(GPIO_DAT, PI_OUTPUT);
+  gpioSetMode(GPIO_CLK, PI_INPUT);
+  gpioSetMode(GPIO_LAT, PI_INPUT);
+
+  gpioSetPullUpDown(GPIO_CLK, PI_PUD_UP);
+  gpioSetPullUpDown(GPIO_LAT, PI_PUD_UP);
+
+  gpioSetAlertFunc(GPIO_CLK, clocking);
+  gpioSetAlertFunc(GPIO_LAT, latching);
 
   while (1) {
     loop();
