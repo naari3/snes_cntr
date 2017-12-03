@@ -28,6 +28,7 @@ void clocking(int gpio, int level, uint32_t tick) {
 
 void latching(int gpio, int level, uint32_t tick) {
   if (level == 1) {
+    latch_count++;
     current_input = next_input;
     clock_count = 0;
     controll();
@@ -57,7 +58,8 @@ void setup() {
 }
 
 void loop() {
-  /* code */
+  printf("%d\n", latch_count);
+  time_sleep(1);
 }
 
 int main() {
