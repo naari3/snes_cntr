@@ -17,25 +17,6 @@ extern int current_input;
 extern int next_input = 1;
 
 void controll();
-void clocking(int gpio, int level, uint32_t tick);
-void latching(int gpio, int level, uint32_t tick);
-
-void setup() {
-  gpioSetMode(GPIO_VCC, PI_INPUT);
-  gpioSetMode(GPIO_DAT, PI_OUTPUT);
-  gpioSetMode(GPIO_CLK, PI_INPUT);
-  gpioSetMode(GPIO_LAT, PI_INPUT);
-
-  gpioSetPullUpDown(GPIO_CLK, PI_PUD_UP);
-  gpioSetPullUpDown(GPIO_LAT, PI_PUD_UP);
-
-  gpioSetAlertFunc(GPIO_CLK, clocking);
-  gpioSetAlertFunc(GPIO_LAT, latching);
-}
-
-void loop() {
-  /* code */
-}
 
 void clocking(int gpio, int level, uint32_t tick) {
   if (level == 1) {
@@ -60,6 +41,23 @@ void controll() {
   } else {
     gpioWrite_Bits_0_31_Set(1<<GPIO_DAT);
   }
+}
+
+void setup() {
+  gpioSetMode(GPIO_VCC, PI_INPUT);
+  gpioSetMode(GPIO_DAT, PI_OUTPUT);
+  gpioSetMode(GPIO_CLK, PI_INPUT);
+  gpioSetMode(GPIO_LAT, PI_INPUT);
+
+  gpioSetPullUpDown(GPIO_CLK, PI_PUD_UP);
+  gpioSetPullUpDown(GPIO_LAT, PI_PUD_UP);
+
+  gpioSetAlertFunc(GPIO_CLK, clocking);
+  gpioSetAlertFunc(GPIO_LAT, latching);
+}
+
+void loop() {
+  /* code */
 }
 
 int main() {
